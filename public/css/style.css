@@ -1,0 +1,259 @@
+:root{
+    --color-primary: #6C63FF;
+    --color-secondary: #6C63FF;
+    --color-tertiary: #5D55E1;
+    --color-blue: #ACD8D0;
+    --color-footer: #a39ef0;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.bg-primary{
+    background-color: var(--color-primary) !important;
+}
+
+.navbar{
+    position: fixed !important;
+    width: 95%;
+    height: 80px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    z-index: 1;
+}
+
+/* TEMP */
+.logo{
+    width: 50px;
+    height: 50px;
+    background-color: grey;
+    border-radius: 50%;
+}
+
+.index-heading{
+    height: 700px;
+    border-radius: 0 0 300px 300px;
+    /* width: 100% !important; */
+    background-color: var(--color-blue);
+}
+
+.heading-img{
+    position: relative;
+    width: 30%;
+    float: right;
+    margin-top: 150px;
+    margin-right: 180px;
+}
+
+.index-heading h1{
+    position: relative;
+    float: left;
+    margin-top: 200px;
+    font-size: 96px;
+    font-weight: bold;
+    color: white;
+    margin-left: 130px;
+}
+
+.heading-btn{
+    position: relative;
+    float: left;
+    margin-top: 500px;
+    right: 450px;
+}
+
+.btn-prim{
+    background-color: var(--color-secondary);
+    text-align: center;
+    padding: 15px 30px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+/* .btn-prim h2{
+    margin-top: 5px;
+    color: white;
+    font-size: 24px;
+} */
+
+.btn-prim:hover{
+    cursor: pointer;
+    background-color: var(--color-tertiary);
+}
+
+.body-img{
+    position: relative;
+    right: 100px;
+}
+
+.first-row-txt{
+    margin-top: 200px;
+}
+
+.slide-left{
+    animation: slideLeft 0.5s ease-in-out;
+}
+
+.slide-right{
+    animation: slideRight 0.5s ease-in-out;
+}
+
+.footer{
+    height: 250px;
+    background-color: var(--color-footer);
+}
+
+.login-side{
+    background-color: var(--color-primary);
+}
+
+.login-img{
+    position: relative;
+    width: 60%;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.full-width-height{
+    margin-left: 0;
+    margin-right: 0;
+    width: 100vw;
+    height: 100vh;
+}
+.first-login-txt{
+    margin-top: 80px;
+    text-align: center;
+    font-weight: bold;
+}
+.secound-login-txt{
+    margin-top: 160px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+.login-form{
+    margin-top: 200px;
+    width: 70%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.form-control{
+    margin-bottom: 20px;
+}
+
+/* Computer screens */
+@media screen and (min-width: 1024px){
+    .navbar{
+        /* overflow: hidden !important; */
+        position: fixed !important;
+        width: 95%;
+        height: 80px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+    .logo{
+        margin-right: 10px;
+    }
+    /* .navbar-collapse ul{
+        position: relative !important;
+        left: 25%;
+        transform: translateX(-25%);
+    } */
+    .first-row-txt{
+        margin-left: 150px;
+    }
+
+}
+
+/* small devices */
+@media screen and (max-width: 768px){
+    .first-row-txt{
+        margin-top: 10px;
+    }
+    .navbar{
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .body-img{
+        width: 80vw;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .index-heading{
+        height: 650px;
+        width: 100vw !important;
+        border-radius: 0 0 80px 80px;
+    }
+    .heading-img{
+        width: 30%;
+        float: top;
+        right: 50%;
+        width: 50vw;
+        transform: translateX(50%);
+        margin-right: 0;
+        margin-top: 200px;
+    }
+    .index-heading h1{
+        position: relative;
+        float: bottom;
+        margin-top: 0;
+        font-size: 48px;
+        text-align: center;
+        left: 50%;
+        transform: translateX(-50%);
+        font-weight: bold;
+        color: white;
+        margin-left: 10px;
+    }
+    .heading-btn{
+        position: relative;
+        float: left;
+        margin-top: 10px;
+        right: 0;
+    }
+    .btn-prim{
+        background-color: var(--color-secondary);
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        padding: 15px 30px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-prim h2{
+        margin-top: 5px;
+        color: white;
+        font-size: 24px;
+    }
+}
+
+@keyframes slideRight{
+    from{
+        opacity: 0;
+        transform: translateX(-50%);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideLeft{
+    from{
+        opacity: 0;
+        transform: translateX(20%);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

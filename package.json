@@ -1,0 +1,27 @@
+{
+  "name": "vaccin-platform",
+  "version": "1.0.0",
+  "description": "A vaccination platform for digital vaccination cards",
+  "main": "index.js",
+  "scripts": {
+    "start-nodemon": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abodsakah/vaccin-platform.git"
+  },
+  "author": "Abdulrahman Sakah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abodsakah/vaccin-platform/issues"
+  },
+  "homepage": "https://github.com/abodsakah/vaccin-platform#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "nodemon": "^2.0.12",
+    "promise-mysql": "^5.0.3"
+  }
+}
