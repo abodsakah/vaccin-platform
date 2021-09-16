@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 :root{
     --color-primary: #6C63FF;
-    --color-secondary: #6C63FF;
-    --color-tertiary: #5D55E1;
+    --color-secondary: #6058E1;
+    --color-tertiary: #261eb8;
     --color-blue: #ACD8D0;
     --color-footer: #a39ef0;
 }
@@ -18,6 +20,7 @@ body{
 
 .navbar{
     position: fixed !important;
+    top: 0;
     width: 95%;
     height: 80px;
     margin-top: 20px;
@@ -25,19 +28,19 @@ body{
     z-index: 1;
 }
 
-/* TEMP */
-.logo{
-    width: 50px;
-    height: 50px;
-    background-color: grey;
-    border-radius: 50%;
-}
-
 .index-heading{
     height: 700px;
     border-radius: 0 0 300px 300px;
     /* width: 100% !important; */
     background-color: var(--color-blue);
+}
+.cursive{
+    font-family: 'Pacifico', cursive;
+}
+
+.navbar-brand{
+    font-family: 'Pacifico', cursive;
+    font-size: 24px;
 }
 
 .heading-img{
@@ -66,22 +69,20 @@ body{
 }
 
 .btn-prim{
-    background-color: var(--color-secondary);
+    background-color: var(--color-secondary) !important;
     text-align: center;
     padding: 15px 30px;
     border-radius: 20px;
     transition: all 0.3s ease;
-}
-
-/* .btn-prim h2{
-    margin-top: 5px;
-    color: white;
     font-size: 24px;
-} */
+    font-weight: bold;
+    color: white !important;
+}
 
 .btn-prim:hover{
     cursor: pointer;
-    background-color: var(--color-tertiary);
+    color: white;
+    background-color: var(--color-tertiary) !important;
 }
 
 .body-img{
@@ -135,16 +136,79 @@ body{
     color: var(--color-primary);
 }
 .login-form{
-    margin-top: 200px;
     width: 70%;
     position: relative;
     left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.login-form h1{
+    margin-bottom: 20px;
 }
 .form-control{
     margin-bottom: 20px;
 }
+.login-btn{
+    padding-right: 80%;
+    position: relative;
+    text-align: center;
+    /* left: 25%;
+    transform: translateX(-25%);
+    width: 100%; */
+}
 
+.qr-code svg{
+    border-radius: 50px;
+}
+.qr-code{
+    position: relative;
+    background-color: var(--color-primary);
+    padding: 30px;
+    width: 360px;
+    height: 360px;
+    border-radius: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.header-spacer{
+    margin-top: 150px;
+}
+.page-header{
+    font-size: 82px;
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.person-name{
+    font-size: 64px;
+    text-align: center;
+}
+
+.person-info{
+    text-align: center;
+    color: grey;
+    font-size: 16px;
+    margin-bottom: 50px;
+}
+
+.vaccin_info{
+    -webkit-box-shadow: 0px 0px 19px 1px rgba(0,0,0,0.1); 
+    box-shadow: 0px 0px 19px 1px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 50px;
+    border-radius: 20px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.header-text{
+    font-size: 64px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
 /* Computer screens */
 @media screen and (min-width: 1024px){
     .navbar{

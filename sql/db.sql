@@ -42,7 +42,6 @@ CREATE TABLE `vaccins_patients` (
 DROP TABLE IF EXISTS `doses`;
 CREATE TABLE `doses` (
     id INT(11) NOT NULL AUTO_INCREMENT,
-    vaccin_id INT(11) NOT NULL,
     patient_id INT(11) NOT NULL,
     staff_id int(11) NOT NULL,
     dose int(11) NOT NULL,
@@ -103,3 +102,43 @@ CREATE TABLE `errors` (
     error_data text NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP VIEW IF EXITS vaccin_info;
+CREATE VIEW vaccin_info AS
+    SELECT
+        vaccins.id,
+        vaccins.name,
+        vaccins_patients.patient_id,
+        vaccins_patients.vaccin_id,
+        vaccins_patients.dose
+    FROM
+    vaccins
+    JOIN
+    vaccins_patients ON
+    vaccins.id = vaccins_patients.vaccin_id;
+
+DROP VIEW IF EXISTS doses;
+CREATE VIEW doses AS
+SELECT
+    doses.id,
+    doses.staff_id,
+    doses.dose,
+    doses.date,
+    CONCAT(patients.first_name, ' ', patients.last_name) AS patient_name,
+    CONCAT(staff_login.first_name, ' ', staff_login.last_name) AS staff_name,
+    vaccin_info.name,
+    vaccin_info.patient_id,
+    vaccin_info.vaccin_id
+FROM
+    doses
+        JOIN
+            patients ON
+                patients.id = doses.patient_id
+        JOIN
+            staff_login ON
+                staff_login.id = doses.staff_id
+        JOIN
+            vaccin_info ON
+                vaccin_info.patient_id = doses.patient_id;
+         
+         

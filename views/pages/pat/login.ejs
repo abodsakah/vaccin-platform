@@ -8,12 +8,22 @@
 
     <div class="col login-side">
         <div class="login-form">
-            <h1>Logga in</h1>
+            <h1 class="text-white">Logga in</h1>
+            <% for(error of errors){ %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="alert-inner--icon"><i class="fas fa-times"></i></span>
+                    <span class="alert-inner--text"><strong>Oj!</strong> <%= error %> </span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <% } %> 
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Personnummer">
-                <input type="text" class="form-control" placeholder="Lösenord">
-                
-                <a href="" class="btn-prim"><h2>Logga in</h2></a>
+                <form method="POST">
+                    <input type="text" name="personnummer" autocomplete="personnummer" class="form-control" placeholder="Personnummer" required>
+                    <input type="password" autocomplete="current-password" name="password" class="form-control" placeholder="Lösenord" required>
+                    <button type="submit">Logga in</button>
+                </form>
             </div>
         </div>
     </div>

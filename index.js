@@ -3,7 +3,10 @@
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const auth = require("./src/auth");
 const app = express();
+
+const patientRoute = require("./routes/patient");
 
 const router = express.Router();
 const port = process.env.PORT || 3000;
@@ -24,32 +27,18 @@ app.use(session({
 
 
 app.use(express.static("public"));
+app.use("/patient", patientRoute);
 app.set('view engine', 'ejs');
 
 
 app.get("/", (req, res) =>
 {
-    let signedIn = false;
-    if (req.session.loggedIn)
-    {
-        signedIn = true;
-    }
+
     let data = {
         title: "Välkomen till vaccin beviset",
-        signedIn
+        signedIn: req.session.loggedIn
     }
     res.render("pages/index", data);
-});
-
-app.get("/pat/login", (req, res) =>
-{
-    if (!req.session.loggedIn)
-    {
-        let data = {
-            title: "Logga in | vaccin beviset",
-        }
-        res.render("pages/pat/login", data);
-   }
 });
 
 app.use((req, res, next) => {
