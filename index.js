@@ -9,7 +9,7 @@ const app = express();
 const patientRoute = require("./routes/patient");
 
 const router = express.Router();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3500;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
