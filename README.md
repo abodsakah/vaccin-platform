@@ -1,6 +1,7 @@
 ![Digi vaccin](images/Github%20banner.png)
 Digi vaccin is a project i am working on for my university where i have to be a digital vaccin pass.
-![example workflow](https://github.com/abodsakah/vaccin-platform/actions/workflows/node.js.yml/badge.svg)
+
+![build status](https://github.com/abodsakah/vaccin-platform/actions/workflows/node.js.yml/badge.svg)
 # Tech
 - Nodejs: as a backend to the website
 - React native: for making the mobile application
