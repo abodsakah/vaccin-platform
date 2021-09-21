@@ -1,0 +1,32 @@
+<%- include('../../modules/header'), {title:title} %>
+<%- include('../../modules/navbar'), {signedIn, isStaff}%>
+<div class="header-spacer"></div>
+<div class="container">
+    <div class="input-group mb3 searchBox">
+            <input type="text" class="form-control" placeholder="Sök term" aria-label="Personnummer" aria-describedby="basic-addon2" name="searchBox" id="searchBox">
+            <div class="input-group-append">
+                <button class="btn btn-prim" type="button" onclick="getSearch()">Sök</button>
+            </div>
+    </div>
+    <% if(patients[0].length > 0){  %>
+        <h4>Hittade <%= patients[0].length %> sök resultat</h4>
+        <br>
+    <% for(patient of patients[0]) { %>
+        <div class="patient-card">
+            <a href="/staff/patient=<%= patient.id %>"><h1><%= patient.first_name %> <%= patient.last_name %></h1></a>
+            <h2><small>Personnummer: <%= patient.personnummer %></small></h2>
+        </div>
+    <% }}else{ %>
+        <h1>Oj, hittade inga träffar!</h1>
+    <% } %>
+</div>
+<script>
+    function getSearch(){
+        var search = document.getElementById("searchBox").value;
+        if(search == ""){
+            return false;
+        }
+        window.location.replace("/staff/search=" + search); 
+    }
+</script>
+<%- include('../../modules/footer') %> 

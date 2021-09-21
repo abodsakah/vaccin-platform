@@ -1,0 +1,38 @@
+<%- include('../../modules/header'), {title:title} %>
+<%- include('../../modules/navbar'), {signedIn, isStaff}%>
+<div class="header-spacer"></div>
+
+<div class="container">
+    <h1>Redigera information för patient <span style="text-decoration: underline;"><%= patient.first_name %> <%= patient.last_name %></span></h1>
+    <br>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Förnamn</h3>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Förnamn" value="<%= patient.first_name%>" name="first_name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3>Efternamn</h3>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Efternamn" value="<%= patient.last_name %>" name="last_name">
+                </div>
+            </div>
+        </div>
+        <h3>Mail</h3>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="exempel@domän.com" value="<%= patient.email%>" name="mail">
+        </div>
+        <h3>Mobil nummer</h3>
+        <div class="form-group">
+            <input type="number" class="form-control number-input" placeholder="072121212" value="<%= patient.telephone%>" name="mobile">
+        </div>
+        <h3>Adress</h3>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Adress" value="<%= patient.adress %>" name="adress">
+        </div>
+        <button class="btn-prim w-100">Klar</button>
+    </form>
+</div>
+<%- include('../../modules/footer') %> 

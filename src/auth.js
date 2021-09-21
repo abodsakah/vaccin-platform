@@ -34,10 +34,16 @@ async function getPat(personnummer)
 {
     let sql = "SELECT * FROM patients where personnummer=?";
     let res = await db.query(sql, [personnummer]);
-
+    return res;
+}
+async function getStaff(username)
+{
+    let sql = "SELECT * FROM staff_login where username=?";
+    let res = await db.query(sql, [username]);
     return res;
 }
 
 module.exports = {
-    getPat: getPat
+    getPat: getPat,
+    getStaff: getStaff
 }

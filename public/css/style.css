@@ -12,6 +12,28 @@ body{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: overlay;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(189, 189, 189, 0.5);
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(189, 189, 189, 1);;
 }
 
 .bg-primary{
@@ -22,10 +44,9 @@ body{
     position: fixed !important;
     top: 0;
     width: 95%;
-    height: 80px;
     margin-top: 20px;
     margin-bottom: 10px;
-    z-index: 1;
+    z-index: 5;
 }
 
 .index-heading{
@@ -72,7 +93,8 @@ body{
     background-color: var(--color-secondary) !important;
     text-align: center;
     padding: 15px 30px;
-    border-radius: 20px;
+    border-radius: 0.5rem;
+    border: none;
     transition: all 0.3s ease;
     font-size: 24px;
     font-weight: bold;
@@ -103,8 +125,10 @@ body{
 }
 
 .footer{
+    position: relative;
     height: 250px;
     background-color: var(--color-footer);
+    margin-top: 100px;
 }
 
 .login-side{
@@ -148,24 +172,35 @@ body{
 .form-control{
     margin-bottom: 20px;
 }
+.number-input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
 .login-btn{
-    padding-right: 80%;
+    background-color: var(--color-secondary);
+    border: none;
+    text-align: center;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
     position: relative;
     text-align: center;
-    /* left: 25%;
-    transform: translateX(-25%);
-    width: 100%; */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease;
 }
-
+.login-btn:hover{
+    cursor: pointer;
+    background-color: var(--color-tertiary);
+}
 .qr-code svg{
     border-radius: 50px;
 }
-.qr-code{
+.qr-code {
     position: relative;
     background-color: var(--color-primary);
-    padding: 30px;
-    width: 360px;
-    height: 360px;
+    padding: 25px;
+    width: 300px;
+    height: 300px;
     border-radius: 70px;
     left: 50%;
     transform: translateX(-50%);
@@ -193,8 +228,8 @@ body{
 }
 
 .vaccin_info{
-    -webkit-box-shadow: 0px 0px 19px 1px rgba(0,0,0,0.1); 
-    box-shadow: 0px 0px 19px 1px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0px 3px 5px 5px rgba(0,0,0,0.1); 
+    box-shadow: 0px 3px 5px 5px rgba(0,0,0,0.1);
     padding: 20px;
     margin-bottom: 50px;
     border-radius: 20px;
@@ -209,6 +244,56 @@ body{
     font-weight: bold;
     margin-bottom: 30px;
 }
+.patient-card{
+    padding: 20px;
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0px 3px 5px 5px rgba(0,0,0,0.1);
+    --webkit-box-shadow: 0px 3px 5px 5px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}
+.searchBox{
+    margin-bottom: 2rem;
+}
+.btn-patient{
+    font-size: 12px !important;
+    padding: 10px 15px !important;
+}
+.date-picker{
+    border-radius: 0.5rem;
+    border: .0625rem solid #ced4da;
+    padding: .75rem 1rem;
+}
+.bottom-spacer{
+    margin-bottom: 9%;
+}
+.booking-card{
+    padding: 20px;
+    --webkit-box-shadow: 0px 3px 5px 5px rgba(0,0,0,0.1);
+    box-shadow: 0px 3px 5px 5px rgba(0,0,0,0.1);
+    border-radius: 1rem;
+    padding-bottom: 20rem;
+}
+.no-booking-text{
+    text-align: center;
+    margin-top: 43px;
+}
+.cr-text{
+    text-align: center;
+    font-size: 12px;
+    color: white;
+}
+
+.footer-img{
+    position: relative;
+    width: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.action-btns{
+    width: 100%;
+}
+
 /* Computer screens */
 @media screen and (min-width: 1024px){
     .navbar{
@@ -297,6 +382,23 @@ body{
         margin-top: 5px;
         color: white;
         font-size: 24px;
+    }
+    .footer-img{
+        width: 50%;
+    }
+    .booking-card{
+        margin-top: 2rem;
+    }
+    .btn-prim{
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .action-btn > .btn-prim{
+        left: 0% !important;
+    }
+    .image-side{
+        display: none !important;
     }
 }
 

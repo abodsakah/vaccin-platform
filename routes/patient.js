@@ -62,17 +62,27 @@ router.get("/profil", async (req, res) =>
     {
         let person = req.session.user[0];
         let vaccins = await vaccinInfo.getVaccinByPatient(person.id);
+        let signedIn = true;
         let data = {
             title: "Din patient profil | Digi vaccin",
-            signedIn: req.session.loggedIn,
+            signedIn,
             person: person,
-            vaccins
+            vaccins,
+            person,
+            isStaff : false
         }
         res.render("pages/pat/profile", data);
     } else
     {
         res.redirect("/patient/login");
     }
+});
+
+router.get("/logout", (req, res) =>
+{
+    let signedIn = false;
+    req.session.destroy();
+    res.redirect("/");
 });
 
 module.exports = router;

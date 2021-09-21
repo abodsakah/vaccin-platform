@@ -45,11 +45,13 @@ CREATE TABLE `doses` (
     patient_id INT(11) NOT NULL,
     staff_id int(11) NOT NULL,
     dose int(11) NOT NULL,
-    date DATE NOT NULL,
+    vaccin_id INT(11) NOT NULL,
+    date varchar NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (vaccin_id) REFERENCES vaccins(id),
     FOREIGN KEY (patient_id) REFERENCES patients(id),
-    FOREIGN KEY (staff_id) REFERENCES staff_login(id)
+    FOREIGN KEY (staff_id) REFERENCES staff_login(id),
+    FORIGN KEY (vaccin_id) REFERENCES vaccins(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -108,14 +110,18 @@ CREATE VIEW vaccin_info AS
     SELECT
         vaccins.id,
         vaccins.name,
-        vaccins_patients.patient_id,
-        vaccins_patients.vaccin_id,
-        vaccins_patients.dose
+        doses.patient_id,
+        doses.vaccin_id,
+        doses.dose
+        CONCAT(patients.first_name, ' ', patients.last_name) AS patient_name,
+        CONCAT(staff_login.first_name, ' ', staff_login.last_name) AS staff_name
     FROM
     vaccins
-    JOIN
-    vaccins_patients ON
-    vaccins.id = vaccins_patients.vaccin_id;
+    JOIN doses ON vaccins.id = doses.vaccin_id
+    JOIN patients ON doses.patient_id = patients.id
+    JOIN staff_login ON doses.staff_id = staff_login.id
+    ORDER BY vaccins.id;
+
 
 DROP VIEW IF EXISTS doses;
 CREATE VIEW doses AS
@@ -142,3 +148,11 @@ FROM
                 vaccin_info.patient_id = doses.patient_id;
          
          
+-- Procuder
+DROP PROCEDURE IF EXISTS `searchPatient`;
+DELIMITER ;;
+CREATE PROCEDURE `searchPatient`(IN seacrhTerm varchar(255))
+BEGIN
+    SELECT * FROM `patients` WHERE `personnummer`LIKE CONCAT('%', seacrhTerm, '%') OR `first_name` LIKE CONCAT('%', seacrhTerm, '%') OR `last_name` LIKE CONCAT('%', seacrhTerm, '%');
+END;;
+DELIMITER ;

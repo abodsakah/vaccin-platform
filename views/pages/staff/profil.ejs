@@ -1,0 +1,36 @@
+<%- include('../../modules/header'), {title:title} %>
+<%- include('../../modules/navbar'), {signedIn, isStaff}%>
+
+<div class="header-spacer"></div>
+
+<div class="container">
+    <div class="row">
+        
+        <div class="col-md-8">
+            <div class="input-group mb3">
+                    <input type="text" class="form-control" placeholder="Sök ord" aria-label="Personnummer" aria-describedby="basic-addon2" name="searchBox" id="searchBox">
+                    <div class="input-group-append">
+                        <button class="btn btn-prim" type="button" onclick="getSearch()">Sök</button>
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="booking-card">
+                <h2>Bokningar idag</h2>
+                <hr>
+                <h3 class="no-booking-text">Inga bokningar för idag 😊</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getSearch(){
+        var search = document.getElementById("searchBox").value;
+        if(search == ""){
+            return false;
+        }
+        window.location.replace("/staff/search=" + search); 
+    }
+</script>
+<%- include('../../modules/footer') %> 

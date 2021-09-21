@@ -1,5 +1,5 @@
 <%- include('../../modules/header'), {title:title} %>
-<%- include('../../modules/navbar'), {signedIn}%>
+<%- include('../../modules/navbar'), {signedIn, isStaff}%>
 
 <div class="header-spacer"></div>
 <div class="container profile-contaienr">
@@ -12,6 +12,7 @@
     <% for(vaccin of vaccins){ %>
         <div class="vaccin_info">
             <h2><span class="bold">Dos nummer:</span> <%= vaccin.dose %> </h2>
+            <h2><small style="color: grey;"><%= vaccin.name %> </small></h2>
             <h3><span class="bold">Datum tagen:</span> <%= vaccin.date %> </h3>
             <h3><span class="bold">Administreras av:</span> <%= vaccin.staff_name %></h3>
             <h3><span class="bold">Till patient:</span> <%= vaccin.patient_name %></h3>
@@ -21,8 +22,8 @@
 
 <script>
     const qr = new QRCodeStyling({
-        width: 300,
-        height: 300,
+        width: 250,
+        height: 250,
         margin: 20,
         type: 'svg',
         data: "<%= person.secret %>",

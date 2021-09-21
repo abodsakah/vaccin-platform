@@ -1,11 +1,11 @@
 <%- include('../modules/header'), {title:title} %>
-<%- include('../modules/navbar'), {signedIn}%>
+<%- include('../modules/navbar'), {signedIn, isStaff}%>
 
 <div class="index-heading">
     
     <img class="heading-img" src="/images/illustrations/undraw_Romantic_getaway_re_3f45.svg" alt="Låt oss träffas igen">
     <h1>Låt oss <br> träffas igen</h1>
-    <a class="btn-prim heading-btn">Hämta din bevis idag</a>
+    <a class="btn-prim heading-btn" href="/patient/login">Hämta din bevis idag</a>
 </div>
 <br><br>
 <div class="container">

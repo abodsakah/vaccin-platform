@@ -105,3 +105,9 @@ dist
 
 # enviroment file
 .env
+
+# documents
+*.ods
+*.odt
+riskHantering.md
+GANT.html

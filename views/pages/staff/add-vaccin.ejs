@@ -1,0 +1,30 @@
+<%- include('../../modules/header'), {title:title} %>
+<%- include('../../modules/navbar'), {signedIn, isStaff}%>
+<div class="header-spacer"></div>
+
+<div class="container">
+    <h1>Lägg till vaccin dose för patient <span style="text-decoration: underline;"><%= patient.first_name %> <%= patient.last_name %></span></h1>
+    <br><br>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Datum:</h2>
+                <input type="date" class="date-picker w-100" name="date" min="1500-01-01" max="2080-12-31">
+            </div>
+            <div class="col-md-6">
+                <h2>Vaccin: </h2>
+                <select style="z-index: 0;" class="selectpicker w-100" title="Vaccin namn" data-live-search="true" data-live-search-placeholder="Sök" name="vaccin">
+                    <% for(vaccine of vaccines){ %>
+                        <option value="<%= vaccine.id %>"><%= vaccine.name %></option>
+                    <% } %>
+                </select>
+            </div>
+        </div>
+        
+        <br><br>
+        <button class="btn-prim w-100" type="submit">Klar</button>
+    </form>
+</div>
+<div class="bottom-spacer"></div>
+
+<%- include('../../modules/footer') %> 
