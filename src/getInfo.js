@@ -81,10 +81,26 @@ async function getAllvaccines()
     return res;
 }
 
+async function getBookingForStaff(staff_id)
+{
+    let sql = "SELECT * FROM `patients_bookings` WHERE staff_id = ?";
+    let res = await db.query(sql, [staff_id]);
+    return res;
+}
+
+async function getBookingById(booking_id)
+{
+    let sql = "SELECT * FROM `patients_bookings` WHERE id = ?";
+    let res = await db.query(sql, [booking_id]);
+    return res;
+}
+
 module.exports = {
     getVaccinByPatient,
     getAllPatients,
     getPatientBySearch,
     getPatientByID,
-    getAllvaccines
+    getAllvaccines,
+    getBookingForStaff,
+    getBookingById
 }

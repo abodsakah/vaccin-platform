@@ -5,7 +5,6 @@
 
 <div class="container">
     <div class="row">
-        
         <div class="col-md-8">
             <div class="input-group mb3">
                     <input type="text" class="form-control" placeholder="Sök ord" aria-label="Personnummer" aria-describedby="basic-addon2" name="searchBox" id="searchBox">
@@ -13,12 +12,35 @@
                         <button class="btn btn-prim" type="button" onclick="getSearch()">Sök</button>
                     </div>
             </div>
+            <br><br>
+            <a href="/staff/add-patient" class="btn-prim">Lägg till en ny patient</a>
+            <br><br><br>
+            <div class="booking-card">
+                <div class="booking-contaienr full-height">
+                    <% for(booking of bookings) { %> 
+                        <div class="booking-card-item">
+                            <h3><%= booking.first_name %> <%= booking.last_name %>&nbsp;&nbsp;<a href="/staff/edit-booking=<%= booking.id %> "><i class="fas fa-pen fa-xs"></i></a></h3>
+                            <h4><%= booking.date_booked %><br>kl: <%= booking.time_booked %> </h4>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
         </div>
+        <% console.log(bookings) %> 
         <div class="col-md-4">
             <div class="booking-card">
                 <h2>Bokningar idag</h2>
                 <hr>
-                <h3 class="no-booking-text">Inga bokningar för idag 😊</h3>
+                <div class="booking-contaienr">
+                  <% for(booking of bookings){ %>
+                    <% if(booking.date_booked == date) {%>
+                      <div class="booking-card-item">
+                          <h3><%= booking.first_name %> <%= booking.last_name %>&nbsp;&nbsp;<a href="/staff/edit-booking=<%= booking.id %> "><i class="fas fa-pen fa-xs"></i></a></h3>
+                          <h4><%= booking.date_booked %><br>kl: <%= booking.time_booked %> </h4>
+                      </div>
+                <%}}%>
+                </div>
+                  
             </div>
         </div>
     </div>

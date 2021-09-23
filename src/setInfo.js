@@ -69,8 +69,62 @@ async function addDose(patient_id, staff_id, vaccin_id, date)
         return res;
     }
 }
+/**
+ * @description adds a patient to the database
+ * @param {*} first_name The first name of the patient
+ * @param {*} last_name The last name of the patient
+ * @param {*} email The email of the patient
+ * @param {*} phone The phone number of the patient
+ * @param {*} adress The adress of the patient
+ * @param {*} personnummer The personnummer of the patient
+ * @param {*} password The password of the patient
+ * @returns 
+ */
+async function addUser(first_name, last_name, email, phone, adress, personnummer, password)
+{
+    let secret = randomSecret();
+    let sql = "INSERT INTO `patients` (`id`, `first_name`, `last_name`, `email`, `telephone`, `adress`, `personnummer`, `password`, `secret`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let res = await db.query(sql, [first_name, last_name, email, phone, adress, personnummer, password, secret]);
+    return res;
+}
+
+function randomSecret()
+{
+    let chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let secret = '';
+    for (let i = 0; i < 32; i++)
+    {
+        secret += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return secret;
+}
+
+async function updatePatient(patient_id, mail, phone, address, new_pass)
+{
+    let sql = "UPDATE `patients` SET `email` = ?, `telephone` = ?, `adress` = ?, `password` = ? WHERE `patients`.`id` = ?";
+    let res = await db.query(sql, [mail, phone, address, new_pass, patient_id]);
+    return res;
+}
+
+async function bookTime(patient_id, staff_id, date, time)
+{
+    let sql = "INSERT INTO `bookings` (`id`, `patient_id`, `staff_id`, `date_booked`, `time_booked`) VALUES (NULL, ?, ?, ?, ?);"
+    let res = await db.query(sql, [patient_id, staff_id, date, time]);
+    return res;
+}
+
+async function updateBooking(id, date, time)
+{
+    let sql = "UPDATE `bookings` SET `date_booked` = ?, `time_booked` = ? WHERE `bookings`.`id` = ?";
+    let res = await db.query(sql, [date, time, id]);
+    return res;
+}
 
 module.exports = {
     updatePatientById,
-    addDose
+    addDose,
+    addUser,
+    updatePatient,
+    bookTime,
+    updateBooking
 }

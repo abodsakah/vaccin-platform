@@ -1,0 +1,49 @@
+<%- include('../../modules/header'), {title:title} %>
+<%- include('../../modules/navbar'), {signedIn, isStaff}%>
+<div class="header-spacer"></div>
+
+<div class="container">
+    <h1 class="display-3">Lägg till en ny patient</h1>
+    <br>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Förnamn</h3>
+                <div class="form-group">
+                    <input required type="text" class="form-control" placeholder="Förnamn" name="first_name" req>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3>Efternamn</h3>
+                <div class="form-group">
+                    <input required type="text" class="form-control" placeholder="Efternamn" name="last_name">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                    <h3>Mail</h3>
+                    <div class="form-group">
+                        <input required type="email" class="form-control w-100" placeholder="mail@exempel.com" name="mail">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3>Telefon</h3>
+                    <div class="form-group">
+                        <input required type="number" class="form-control number-input w-100" placeholder="0701234567" name="phone">
+                    </div>
+                </div>
+            </div>
+            <h3>Adress</h3>
+            <div class="form-group">
+                <input required type="text" class="form-control" placeholder="stad, adress, postnummer" name="adress">
+            </div>
+            <h3>Person nummer</h3>
+            <div class="form-group">
+                <input required type="number" class="form-control number-input" placeholder="0101991234" name="personnummer">
+            </div>
+            <button type="submit" class="btn-prim w-100">Klar</button>
+    </form>
+</div>
+
+<%- include('../../modules/footer') %> 

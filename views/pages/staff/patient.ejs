@@ -8,8 +8,14 @@
     <h2>Adress: <%= patient.adress %> | Telefon: <%= patient.telephone %> </h2>
     <h3><small>Mail: <%= patient.email %> | Person nr.: <%= patient.personnummer %> </small></h3>
     <br>
+    <% for(error of errors){ %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span class="alert-inner--icon"><i class="fas fa-times"></i></span>
+            <span class="alert-inner--text"><%= error %></span>
+        </div>
+    <% } %> 
     <div class="action-btns">
-        <a class="btn-prim btn-patient" href="/staff/edit=<%= patient.id %> ">Redigera patient information</a>  <a class="btn-prim btn-patient" href="/staff/add-vaccin=<%= patient.id %> ">Lägg till vaccin</a>
+        <a class="btn-prim btn-patient" href="/staff/edit=<%= patient.id %> ">Redigera patient information</a>  <a class="btn-prim btn-patient" href="/staff/add-vaccin=<%= patient.id %> ">Lägg till vaccin</a> <button class="btn-prim btn-patient" type="button" data-toggle="modal" data-target="#modal_1">Boka tid för denna patienten</button>
     </div>
     <br><br><br>
     <% for(vaccin of vaccines){ %>
@@ -21,6 +27,55 @@
             <h3><span class="bold">Till patient:</span> <%= vaccin.patient_name %></h3>
         </div>
     <% } %> 
+    <!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal modal-fluid fade" id="modal_1" tabindex="-1" role="dialog" aria-labelledby="modal_1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center py-4">
+                        <form method="post">
+                            <input type="text" style="width: 0 !important; height: 0 !important; opacity: 0; pointer-events:none;" id="dateInput" name="date" tabindex="-1">
+                            <input type="text" style="width: 0 !important; opacity: 0; height : 0 !important; pointer-events:none;" id="timeInput" name="time" tabindex="-1">
+                            <h2>Datum</h2>
+                            <div class="calender w-100">
+                                <div class="month">
+                                    <ul>
+                                    <li class="prev" onclick="getPrevMonth()">&#10094;</li>
+                                    <li class="next" onclick="getNextMonth()">&#10095;</li>
+                                    <li id="dateInfo">August<br><span style="font-size:18px">2021</span></li>
+                                    </ul>
+                                </div>
+                                
+                                <ul class="weekdays">
+                                    <li>Må</li>
+                                    <li>Ti</li>
+                                    <li>On</li>
+                                    <li>To</li>
+                                    <li>Fr</li>
+                                    <li>Lö</li>
+                                    <li>Sö</li>
+                                </ul>
+                                
+                                <ul class="days" id="days">
+                                    
+                                </ul>
+                            </div>
+                            
+                            <h2>Tid</h2>
+                            <div class="times" id="times"></div>
+                            
+                            
+                            <button type="submit" class="btn-prim mt-5 w-100">Boka</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
 

@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+
+            body {
+               
+            }
+            .heading{
+                font-family: 'Nunito', sans-serif;
+                box-sizing: border-box;
+                width: 100%;
+                background-color: #a39ef0;
+                height: 23%;
+                text-align: center;
+                color: white;
+                top: 0;
+                left: 0;
+                box-sizing: border-box;
+            }
+            .heading h1{
+                font-size: 2.5em;
+                font-weight: bold;
+                padding: 0;
+            }
+            .container{
+                font-family: 'Nunito', sans-serif;
+                box-sizing: border-box;
+                width: 100%;
+                text-align: center;
+            }
+            .warning{
+                padding: 5px;
+                font-size: 1.5em;
+                font-weight: bold;
+                background-color: crimson;
+                color: white;
+                border-radius: .5rem;
+                width: 50%;
+                margin-left: 25%;
+            }
+        </style>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="heading">
+            <br>
+            <img src="https://i.ibb.co/dgTTNFt/logo-white.png" style="width: 15%;" alt="Digi vaccine">
+        </div>
+        <div class="container">
+            <h1>Du har fått nya använder inloggning till din profil på Digi vaccin</h1>
+            <h2>Din Person nummer: <%= personnummer %></h2>
+            <h2>Din lösenord: <%= password %></h2>
+            <h2 class="warning">Vänligen uppdatera ditt lösenord i använder profilen efter att du loggar in!</h2>
+            <h3>Tack för att du tar hand om dig och alla andra</h3>
+        </div>
+        </body>
+</html>

@@ -1,0 +1,41 @@
+<%- include('../../modules/header'), {title:title} %>
+<%- include('../../modules/navbar'), {signedIn, isStaff}%>
+<div class="header-spacer"></div>
+
+<div class="container">
+    <form method="post">
+        <input type="text" style="width: 0 !important; height: 0 !important; opacity: 0; pointer-events:none;" id="dateInput" name="date" tabindex="-1">
+        <input type="text" style="width: 0 !important; opacity: 0; height : 0 !important; pointer-events:none;" id="timeInput" name="time" tabindex="-1">
+        <h2>Datum</h2>
+        <div class="calender w-100">
+            <div class="month">
+                <ul>
+                <li class="prev" onclick="getPrevMonth()">&#10094;</li>
+                <li class="next" onclick="getNextMonth()">&#10095;</li>
+                <li id="dateInfo">August<br><span style="font-size:18px">2021</span></li>
+                </ul>
+            </div>
+            
+            <ul class="weekdays">
+                <li>Må</li>
+                <li>Ti</li>
+                <li>On</li>
+                <li>To</li>
+                <li>Fr</li>
+                <li>Lö</li>
+                <li>Sö</li>
+            </ul>
+            
+            <ul class="days" id="days">
+                
+            </ul>
+        </div>
+        
+        <h2>Tid</h2>
+        <div class="times" id="times"></div>
+        
+        
+        <button type="submit" class="btn-prim mt-5 w-100">Boka</button>
+</div>
+
+<%- include('../../modules/footer') %> 

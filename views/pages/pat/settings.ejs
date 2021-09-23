@@ -1,0 +1,50 @@
+<%- include('../../modules/header'), {title:title} %>
+<%- include('../../modules/navbar'), {signedIn, isStaff}%>
+
+<div class="header-spacer"></div>
+
+<div class="container">
+    <h1>Redigera profil</h1>
+    <% for(error of errors) {%>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span class="alert-inner--icon"><i class="fas fa-times"></i></span>
+            <span class="alert-inner--text"><%= error %> </span>
+        </div>
+    <% } %>
+    <br><br>
+    <form action="" method="post">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Mail</h3>
+                    <input type="text" class="form-control" placeholder="exempel@domän.com" value="<%= person.email %>" name="mail">
+                </div>
+                <div class="col-md-6">
+                    <h3>Telefon nummer</h3>
+                    <input type="nummer" class="form-control" placeholder="0712345678" value="<%= person.telephone %>" name="mobile">
+                </div>
+            </div>
+            <h3>Adress</h3>
+            <input type="text" class="form-control" placeholder="Stad, adress, post nummer" value="<%= person.adress %>" name="address">
+        </div>
+        <br>
+        <hr>
+        <h2>Lösenord</h2>
+        <br>
+        <div class="form-group">
+            <h2>Gamla lösenord</h2>
+            <input type="password" class="form-control" placeholder="Gamla lösenordet" name="old_pass">
+        </div>
+        <div class="form-group">
+            <h2>Nya lösenord</h2>
+            <input type="password" class="form-control" placeholder="Nya lösenordet" name="new_pass">
+        </div>
+        <div class="form-group">
+            <h2>Upprep lösenord</h2>
+            <input type="password" class="form-control" placeholder="upprep nya lösenordet" name="rep_pass">
+        </div>
+        <button class="btn-prim w-100" type="submit">Klar</button>
+    </form>
+</div>
+
+<%- include('../../modules/footer') %> 

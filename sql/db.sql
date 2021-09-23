@@ -76,13 +76,11 @@ DROP TABLE IF EXISTS `bookings`;
 CREATE TABLE `bookings` (
     id INT(11) NOT NULL AUTO_INCREMENT,
     patient_id INT(11) NOT NULL,
-    vaccin_id INT(11) NOT NULL,
     staff_id INT(11) NOT NULL,
     date_booked date NOT NULL,
     time_booked time NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (patient_id) REFERENCES patients(id),
-    FOREIGN KEY (vaccin_id) REFERENCES vaccins(id),
     FOREIGN KEY (staff_id) REFERENCES staff_login(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -156,3 +154,18 @@ BEGIN
     SELECT * FROM `patients` WHERE `personnummer`LIKE CONCAT('%', seacrhTerm, '%') OR `first_name` LIKE CONCAT('%', seacrhTerm, '%') OR `last_name` LIKE CONCAT('%', seacrhTerm, '%');
 END;;
 DELIMITER ;
+
+-- view for patients and booking
+DROP VIEW IF EXISTS `patients_bookings`;
+CREATE VIEW `patients_bookings` AS
+SELECT
+patients.id,
+patients.first_name,
+patients.last_name,
+bookings.date_booked,
+bookings.time_booked,
+bookings.staff_id
+FROM
+patients
+JOIN bookings ON patients.id = bookings.patient_id
+ORDER BY bookings.time_booked;
