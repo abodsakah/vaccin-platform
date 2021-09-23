@@ -186,6 +186,7 @@ router.post("/settings", async (req, res) =>
             } else
             {
                 errors.push("Ditt gamla lösenord är felaktigt!");
+                res.push("/patient/settings");
             }
         });
     } else
