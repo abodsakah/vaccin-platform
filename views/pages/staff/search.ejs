@@ -20,13 +20,21 @@
         <h1>Oj, hittade inga träffar!</h1>
     <% } %>
 </div>
+<div class="footer-spacer"></div>
 <script>
+    var search = document.getElementById("searchBox");
+    search.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            getSearch();
+        }
+    });
+
     function getSearch(){
-        var search = document.getElementById("searchBox").value;
         if(search == ""){
             return false;
         }
-        window.location.replace("/staff/search=" + search); 
+        window.location.replace("/staff/search=" + search.value); 
     }
 </script>
 <%- include('../../modules/footer') %> 

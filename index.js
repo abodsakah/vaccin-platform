@@ -13,7 +13,8 @@ var back = require('express-back');
 
 const patientRoute = require("./routes/patient");
 const staffRoute = require("./routes/staff");
-
+const adminRoute = require("./routes/admin");
+const APIRoute = require("./API/apiRoute");
 /* -------------------------------------------------------------------------- */
 /*                            Website configuration                           */
 /* -------------------------------------------------------------------------- */
@@ -44,6 +45,8 @@ app.use(back());
 app.use(express.static("public"));
 app.use("/patient", patientRoute);
 app.use("/staff", staffRoute);
+app.use("/admin", adminRoute);
+app.use("/api", APIRoute);
 app.set('view engine', 'ejs');
 app.disable('x-powered-by');
 
@@ -65,13 +68,22 @@ app.get("/", (req, res) =>
     {
         isStaff = true;
     }
+    let cookies = req.session.acceptedCookies;
+    req.session.prevPage = req.originalUrl;
     let data = {
+        cookies,
         title: "Välkomen till vaccin beviset",
         signedIn,
         person,
         isStaff
     }
     res.render("pages/index", data);
+});
+
+app.get("/accept-cookies", (req, res) =>
+{
+    req.session.acceptedCookies = true;
+    res.redirect(req.session.prevPage);
 });
 
 app.use((req, res, next) => {

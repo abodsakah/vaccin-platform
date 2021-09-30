@@ -9,7 +9,15 @@
 const mysql = require('promise-mysql');
 // const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv').config({ path: './config/.env' });
-let db;
+var db = mysql.createPool({
+    connectionLimit: 10,
+    host: dotenv.parsed.DB_HOST,
+    user: dotenv.parsed.DB_LOGIN,
+    password: dotenv.parsed.DB_PASSWORD,
+    database: dotenv.parsed.DB_NAME,
+    charset: dotenv.parsed.DB_CHAR,
+    multipleStatements: dotenv.parsed.DB_MULTI
+});
 
 (async function (err)
 {

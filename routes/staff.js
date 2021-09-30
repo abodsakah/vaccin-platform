@@ -31,7 +31,10 @@ router.get("/login", async (req, res) =>
 {
     if (!req.session.isLoggedIn)
     {
+        req.session.prevPage = req.originalUrl;
+        let cookies = req.session.acceptedCookies;
         let data = {
+            cookies,
             title: "Logga in till vårdpersonalens portal | Digi vaccin",
             errors: loginErrors,
             
@@ -49,7 +52,6 @@ router.post("/login", async (req, res) =>
     let password = req.body.password;
     if (!req.session.isLoggedIn)
     {
-        console.log(req.body);
         let user = await auth.getStaff(username);
         if (user.length > 0)
         {
@@ -63,7 +65,16 @@ router.post("/login", async (req, res) =>
                     req.session.user = user;
                     req.session.isLoggedIn = true;
                     req.session.isStaff = true;
-                    res.redirect("/staff/profil");
+                    if (user[0].title == "admin")
+                    {
+                        req.session.isAdmin = true;
+                        res.redirect("/admin/dashboard");
+                    }else if(user[0].title == "doktor")
+                    {
+                        req.session.isAdmin = false;
+                        res.redirect("/staff/profil");
+                    }
+                    
                 } else
                 {
                     loginErrors = [];
@@ -87,6 +98,7 @@ router.get("/profil", async (req, res) =>
 {
    if(req.session.isLoggedIn && req.session.isStaff)
    {
+       req.session.prevPage = req.originalUrl;
        let d = new Date();
        let month = d.getMonth() + 1;
        if(month < 10)
@@ -97,7 +109,9 @@ router.get("/profil", async (req, res) =>
        let bookings = await patientInfo.getBookingForStaff(req.session.user[0].id);
        let person = req.session.user[0];
        let signedIn = true;
+       let cookies = req.session.acceptedCookies;
        let data = {
+            cookies,
             title: "Vårdpersonalens profil | Digi vaccin",
             signedIn,
             person,
@@ -118,8 +132,11 @@ router.get("/search=:searchTerm", async (req, res) =>
     let search = req.params.searchTerm;
     if (req.session.isLoggedIn && req.session.isStaff)
     {
+        req.session.prevPage = req.originalUrl;
         let people = await patientInfo.getPatientBySearch(search);
+        let cookies = req.session.acceptedCookies;
         let data = {
+            cookies,
             title: "Vårdpersonalens sök | Digi vaccin",
             signedIn: true,
             person: req.session.user[0],
@@ -138,11 +155,14 @@ router.get("/patient=:id", async (req, res) =>
     let id = req.params.id;
     if (req.session.isLoggedIn && req.session.isStaff)
     {
+        req.session.prevPage = req.originalUrl;
         let patient = await patientInfo.getPatientByID(id);
         if (patient.length > 0)
         {
             let vaccines = await patientInfo.getVaccinByPatient(id);
+            let cookies = req.session.acceptedCookies;
             let data = {
+                cookies,
                 title: "Vårdpersonalens sök | Digi vaccin",
                 signedIn: true,
                 person: req.session.user[0],
@@ -172,7 +192,6 @@ router.post("/patient=:id", async (req, res) =>
         let staff_id = req.session.user[0].id;
         let date = req.body.date;
         let time = req.body.time;
-        console.log(req.body);
         if(date !== "" && time !== ""){
             patientSetter.bookTime(patient_id, staff_id, date, time);
             errors = [];
@@ -195,10 +214,13 @@ router.get("/edit=:id", async (req, res) =>
     let id = req.params.id;
     if (req.session.isLoggedIn && req.session.isStaff)
     {
+        req.session.prevPage = req.originalUrl;
         let patient = await patientInfo.getPatientByID(id);
         if (patient.length > 0)
         {
+            let cookies = req.session.acceptedCookies;
             let data = {
+                cookies,
                 title: "Vårdpersonalens redigera patient | Digi vaccin",
                 signedIn: true,
                 person: req.session.user[0],
@@ -232,12 +254,15 @@ router.get("/add-vaccin=:id", async (req, res) =>
     let id = req.params.id;
     if (req.session.isLoggedIn && req.session.isStaff)
     {
+        req.session.prevPage = req.originalUrl;
         let patient = await patientInfo.getPatientByID(id);
 
         if (patient.length > 0)
         {
             let vaccines = await patientInfo.getAllvaccines();
+            let cookies = req.session.acceptedCookies;
             let data = {
+                cookies,
                 title: "Vårdpersonalens Lägg till vaccin dose | Digi vaccin",
                 signedIn: true,
                 person: req.session.user[0],
@@ -267,8 +292,12 @@ router.post("/add-vaccin=:id", async (req, res) =>
 
 router.get("/add-patient", (req, res) =>
 {
-    if (req.session.isLoggedIn && req.session.isStaff) {
+    if (req.session.isLoggedIn && req.session.isStaff)
+    {
+        req.session.prevPage = req.originalUrl;
+        let cookies = req.session.acceptedCookies;
         let data = {
+            cookies,
             title: "Vårdpersonalens redigera patient | Digi vaccin",
             signedIn: true,
             person: req.session.user[0],
@@ -314,9 +343,12 @@ router.get("/edit-booking=:id", async (req, res) =>
 {
     if(req.session.isLoggedIn && req.session.isStaff)
     {
+        req.session.prevPage = req.originalUrl;
         let id = req.params.id;
         let bookingInfo = await patientInfo.getBookingById(id);
+        let cookies = req.session.acceptedCookies;
         let data = {
+            cookies,
             title: "Vårdpersonalens redigera bokning | Digi vaccin",
             signedIn: true,
             person: req.session.user[0],

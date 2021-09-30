@@ -29,8 +29,12 @@ let errors = [];
 
 router.get("/login", (req, res) =>
 {
-    if(!req.session.isLoggedIn){
+    if (!req.session.isLoggedIn)
+    {
+        req.session.prevPage = req.originalUrl;
+        let cookies = req.session.acceptedCookies;
         let data = {
+            cookies,
             title: "Logga in till din patient profil | Digi vaccin",
             errors: loginErrors
         }
@@ -42,9 +46,11 @@ router.get("/login", (req, res) =>
 });
 router.post("/login", async (req, res) =>
 {
-    let user = await auth.getPat(req.body.personnummer);
+    let user = auth.getPat(req.body.personnummer);
+    console.log(user)
     if (user.length > 0)
     {
+        console.log("Hello")
         let password = req.body.password;
         bcrypt.compare(password, user[0].password, (err, result) =>
         {
@@ -74,10 +80,13 @@ router.get("/profil", async (req, res) =>
 {
     if (req.session.isLoggedIn)
     {
+        req.session.prevPage = req.originalUrl;
         let person = req.session.user[0];
         let vaccins = await vaccinInfo.getVaccinByPatient(person.id);
         let signedIn = true;
+        let cookies = req.session.acceptedCookies;
         let data = {
+            cookies,
             title: "Din patient profil | Digi vaccin",
             signedIn,
             person: person,
@@ -103,9 +112,12 @@ router.get("/settings", async (req, res) =>
 {
     if (req.session.isLoggedIn)
     {
+        req.session.prevPage = req.originalUrl;
         let person = req.session.user[0];
         let signedIn = true;
+        let cookies = req.session.acceptedCookies;
         let data = {
+            cookies,
             title: "Din patient profil | Digi vaccin",
             signedIn,
             person: person,

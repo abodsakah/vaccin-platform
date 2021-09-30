@@ -36,6 +36,11 @@ async function getPat(personnummer)
     let res = await db.query(sql, [personnummer]);
     return res;
 }
+/**
+ * Function to get staff info for authinaction
+ * @param {*} username The username that was assigned to the staff by the web admin
+ * @returns 
+ */
 async function getStaff(username)
 {
     let sql = "SELECT * FROM staff_login where username=?";

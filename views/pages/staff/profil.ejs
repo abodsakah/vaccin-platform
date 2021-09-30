@@ -9,7 +9,7 @@
             <div class="input-group mb3">
                     <input type="text" class="form-control" placeholder="Sök ord" aria-label="Personnummer" aria-describedby="basic-addon2" name="searchBox" id="searchBox">
                     <div class="input-group-append">
-                        <button class="btn btn-prim" type="button" onclick="getSearch()">Sök</button>
+                        <button class="btn btn-prim" style="z-index: 0;" type="button" onclick="getSearch()">Sök</button>
                     </div>
             </div>
             <br><br>
@@ -47,12 +47,18 @@
 </div>
 
 <script>
+    var search = document.getElementById("searchBox");
+    search.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            getSearch();
+        }
+    });
     function getSearch(){
-        var search = document.getElementById("searchBox").value;
         if(search == ""){
             return false;
         }
-        window.location.replace("/staff/search=" + search); 
+        window.location.replace("/staff/search=" + search.value); 
     }
 </script>
 <%- include('../../modules/footer') %> 
