@@ -5,33 +5,13 @@
 * 
 */
 "use strict"
-
-const mysql = require('promise-mysql');
-// const bcrypt = require('bcryptjs');
+const { Sequelize, QueryTypes } = require('sequelize');
 const dotenv = require('dotenv').config({ path: './config/.env' });
-var db = mysql.createPool({
-    connectionLimit: 10,
-    host: dotenv.parsed.DB_HOST,
-    user: dotenv.parsed.DB_LOGIN,
-    password: dotenv.parsed.DB_PASSWORD,
-    database: dotenv.parsed.DB_NAME,
-    charset: dotenv.parsed.DB_CHAR,
-    multipleStatements: dotenv.parsed.DB_MULTI
-});
 
-(async function (err)
-{
-    db = await mysql.createConnection({
-        host: dotenv.parsed.DB_HOST,
-        user: dotenv.parsed.DB_LOGIN,
-        password: dotenv.parsed.DB_PASSWORD,
-        database: dotenv.parsed.DB_NAME,
-        charset: dotenv.parsed.DB_CHAR,
-        multipleStatements: dotenv.parsed.DB_MULTI
-    });
-    if (err){console.log(err);};
-    process.on('exit', () => {db.end()});
-})();
+const db = new Sequelize(dotenv.parsed.DB_NAME, dotenv.parsed.DB_LOGIN, dotenv.parsed.DB_PASSWORD, {
+    host: dotenv.parsed.DB_HOST,
+    dialect: 'mysql',
+});
 
 /**
  * 
@@ -47,9 +27,8 @@ var db = mysql.createPool({
  */
 async function updatePatientById(patient_id, first_name, last_name, email, phone, address)
 {
-    let sql = "UPDATE `patients` SET `first_name` = ?, `last_name` = ?, `email`=?, `telephone`=?, `adress`=? WHERE `patients`.`id` = 1;"
-    let res = await db.query(sql, [first_name, last_name, email, phone, address]);
-    return res;
+    const result = await db.query("UPDATE `patients` SET `first_name` = ?, `last_name` = ?, `email`=?, `telephone`=?, `adress`=? WHERE `patients`.`id` = 1;", { type: QueryTypes.UPDATE, replacements: [first_name, last_name, email, phone, address] })
+    return result;
 }
 
 /**
@@ -63,19 +42,18 @@ async function updatePatientById(patient_id, first_name, last_name, email, phone
  */
 async function addDose(patient_id, staff_id, vaccin_id, date)
 {
-    let vaccin_patient = "SELECT * FROM `doses` WHERE `patient_id` = ? AND `vaccin_id` = ? ";
-    let vaccinRes = await db.query(vaccin_patient, [patient_id, parseInt(vaccin_id)]);
-    if (vaccinRes[0] !== undefined)
+    
+
+    const vaccin_patient = await db.query("SELECT * FROM `doses` WHERE `patient_id` = ? AND `vaccin_id` = ?", { type: QueryTypes.UPDATE, replacements: [patient_id, parseInt(vaccin_id)] })
+    
+    if (vaccin_patient !== undefined)
     {
-        let sql = "INSERT INTO `doses` (`id`, `patient_id`, `staff_id`, `dose`, `vaccin_id`, `date`) VALUES (NULL, ?, ?, ?, ?, ?)";
-        let res = await db.query(sql, [patient_id, staff_id, vaccinRes[0].dose + 1, vaccin_id, date]);
-        return res;
-    } else
-    {
-        let sql = "INSERT INTO `doses` (`id`, `patient_id`, `staff_id`, `dose`, `vaccin_id`, `date`) VALUES (NULL, ?, ?, ?, ?, ?)";
-        let res = await db.query(sql, [patient_id, staff_id, 1, vaccin_id, date]);
-        return res;
+        const result = await db.query("INSERT INTO `doses` (`id`, `patient_id`, `staff_id`, `dose`, `vaccin_id`, `date`) VALUES (NULL, ?, ?, ?, ?, ?)", { type: QueryTypes.INSERT, replacements: [patient_id, staff_id, vaccinRes[0].dose + 1, vaccin_id, date] })
+        return result;
     }
+
+    const result = await db.query("INSERT INTO `doses` (`id`, `patient_id`, `staff_id`, `dose`, `vaccin_id`, `date`) VALUES (NULL, ?, ?, ?, ?, ?)", { type: QueryTypes.INSERT, replacements: [patient_id, staff_id, 1, vaccin_id, date] })
+    return result;
 }
 /**
  * @description adds a patient to the database
@@ -91,9 +69,8 @@ async function addDose(patient_id, staff_id, vaccin_id, date)
 async function addUser(first_name, last_name, email, phone, adress, personnummer, password)
 {
     let secret = randomSecret();
-    let sql = "INSERT INTO `patients` (`id`, `first_name`, `last_name`, `email`, `telephone`, `adress`, `personnummer`, `password`, `secret`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
-    let res = await db.query(sql, [first_name, last_name, email, phone, adress, personnummer, password, secret]);
-    return res;
+    const result = await db.query("INSERT INTO `patients` (`id`, `first_name`, `last_name`, `email`, `telephone`, `adress`, `personnummer`, `password`, `secret`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)", { type: QueryTypes.INSERT, replacements: [first_name, last_name, email, phone, adress, personnummer, password, secret] })
+    return result;
 }
 
 function randomSecret()
@@ -109,23 +86,20 @@ function randomSecret()
 
 async function updatePatient(patient_id, mail, phone, address, new_pass)
 {
-    let sql = "UPDATE `patients` SET `email` = ?, `telephone` = ?, `adress` = ?, `password` = ? WHERE `patients`.`id` = ?";
-    let res = await db.query(sql, [mail, phone, address, new_pass, patient_id]);
-    return res;
+    const result = await db.query("UPDATE `patients` SET `email` = ?, `telephone` = ?, `adress` = ?, `password` = ? WHERE `patients`.`id` = ?", { type: QueryTypes.UPDATE, replacements: [mail, phone, address, new_pass, patient_id] })
+    return result;
 }
 
 async function bookTime(patient_id, staff_id, date, time)
 {
-    let sql = "INSERT INTO `bookings` (`id`, `patient_id`, `staff_id`, `date_booked`, `time_booked`) VALUES (NULL, ?, ?, ?, ?);"
-    let res = await db.query(sql, [patient_id, staff_id, date, time]);
-    return res;
+    const result = await db.query("INSERT INTO `bookings` (`id`, `patient_id`, `staff_id`, `date_booked`, `time_booked`) VALUES (NULL, ?, ?, ?, ?)", { type: QueryTypes.INSERT, replacements: [patient_id, staff_id, date, time] })
+    return result;
 }
 
 async function updateBooking(id, date, time)
 {
-    let sql = "UPDATE `bookings` SET `date_booked` = ?, `time_booked` = ? WHERE `bookings`.`id` = ?";
-    let res = await db.query(sql, [date, time, id]);
-    return res;
+    const result = await db.query("UPDATE `bookings` SET `date_booked` = ?, `time_booked` = ? WHERE `bookings`.`id` = ?", { type: QueryTypes.UPDATE, replacements: [date, time, id] })
+    return result;
 }
 
 module.exports = {

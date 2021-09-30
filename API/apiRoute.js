@@ -43,6 +43,20 @@ router.get("/info/token=:token&vaccPatient=:id", async (req, res) =>
     }
 });
 
+router.get("/info/token=:token&secret=:secret", async (req, res) =>
+{
+    const token = req.params.token;
+    const secret = req.params.secret;
+
+    if (token === API_KEY)
+    {
+        res.send(await vaccinInfo.getPatientBySecret(secret));
+    } else
+    {
+        res.sendStatus(401);
+    }
+})
+
 //staff login information api key
 router.get("/login/token=:token&staff=:user", async (req, res) =>
 {

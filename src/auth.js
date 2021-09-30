@@ -1,30 +1,10 @@
-/**
-* 
-*  @description Main authinaction module\n the users gets autherized by their personal number and there password after that the password is going to be compared to a bcrypt hash from the database where it is amysql database. database accessing is done by the promise-mysql module.
-* 
-* 
-*/
-
-"use strict"
-
-const mysql = require('promise-mysql');
-// const bcrypt = require('bcryptjs');
+const { Sequelize, QueryTypes } = require('sequelize');
 const dotenv = require('dotenv').config({ path: './config/.env' });
-let db;
 
-(async function (err)
-{
-    db = await mysql.createConnection({
-        host: dotenv.parsed.DB_HOST,
-        user: dotenv.parsed.DB_LOGIN,
-        password: dotenv.parsed.DB_PASSWORD,
-        database: dotenv.parsed.DB_NAME,
-        charset: dotenv.parsed.DB_CHAR,
-        multipleStatements: dotenv.parsed.DB_MULTI
-    });
-    if (err){console.log(err);};
-    process.on('exit', () => {db.end()});
-})();
+const db = new Sequelize(dotenv.parsed.DB_NAME, dotenv.parsed.DB_LOGIN, dotenv.parsed.DB_PASSWORD, {
+    host: dotenv.parsed.DB_HOST,
+    dialect: 'mariadb',
+});
 
 /**
 * @description gets the user's personnumber and password
@@ -32,10 +12,10 @@ let db;
 */
 async function getPat(personnummer)
 {
-    let sql = "SELECT * FROM patients where personnummer=?";
-    let res = await db.query(sql, [personnummer]);
-    return res;
+    const result = await db.query("SELECT * FROM patients where personnummer=?", { type: QueryTypes.SELECT, replacements: [personnummer] })
+    return result;
 }
+
 /**
  * Function to get staff info for authinaction
  * @param {*} username The username that was assigned to the staff by the web admin
@@ -43,12 +23,11 @@ async function getPat(personnummer)
  */
 async function getStaff(username)
 {
-    let sql = "SELECT * FROM staff_login where username=?";
-    let res = await db.query(sql, [username]);
-    return res;
+    const result = await db.query("SELECT * FROM staff_login where username=?", { type: QueryTypes.SELECT, replacements: [username] })
+    return result;
 }
 
 module.exports = {
-    getPat: getPat,
-    getStaff: getStaff
+    getPat,
+    getStaff
 }

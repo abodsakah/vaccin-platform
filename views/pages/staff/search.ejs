@@ -8,10 +8,10 @@
                 <button class="btn btn-prim" type="button" onclick="getSearch()">Sök</button>
             </div>
     </div>
-    <% if(patients[0].length > 0){  %>
-        <h4>Hittade <%= patients[0].length %> sök resultat</h4>
+    <% if(patients.length > 0){  %>
+        <h4>Hittade <%= patients.length %> sök resultat</h4>
         <br>
-    <% for(patient of patients[0]) { %>
+    <% for(patient of patients) { %>
         <div class="patient-card">
             <a href="/staff/patient=<%= patient.id %>"><h1><%= patient.first_name %> <%= patient.last_name %></h1></a>
             <h2><small>Personnummer: <%= patient.personnummer %></small></h2>

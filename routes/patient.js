@@ -46,11 +46,9 @@ router.get("/login", (req, res) =>
 });
 router.post("/login", async (req, res) =>
 {
-    let user = auth.getPat(req.body.personnummer);
-    console.log(user)
+    let user = await auth.getPat(req.body.personnummer);
     if (user.length > 0)
     {
-        console.log("Hello")
         let password = req.body.password;
         bcrypt.compare(password, user[0].password, (err, result) =>
         {

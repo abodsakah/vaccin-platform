@@ -7,24 +7,13 @@
 
 "use strict"
 
-const mysql = require('promise-mysql');
-// const bcrypt = require('bcryptjs');
+const { Sequelize, QueryTypes } = require('sequelize');
 const dotenv = require('dotenv').config({ path: './config/.env' });
-let db;
 
-(async function (err)
-{
-    db = await mysql.createConnection({
-        host: dotenv.parsed.DB_HOST,
-        user: dotenv.parsed.DB_LOGIN,
-        password: dotenv.parsed.DB_PASSWORD,
-        database: dotenv.parsed.DB_NAME,
-        charset: dotenv.parsed.DB_CHAR,
-        multipleStatements: dotenv.parsed.DB_MULTI
-    });
-    if (err){console.log(err);};
-    process.on('exit', () => {db.end()});
-})();
+const db = new Sequelize(dotenv.parsed.DB_NAME, dotenv.parsed.DB_LOGIN, dotenv.parsed.DB_PASSWORD, {
+    host: dotenv.parsed.DB_HOST,
+    dialect: 'mysql',
+});
 
 /**
  * @description Is used to get allt he vaccins a patient has
@@ -33,9 +22,18 @@ let db;
  */
 async function getVaccinByPatient(patient_id)
 {
-    let sql = "SELECT * FROM `vaccin_info` WHERE patient_id = ?";
-    let res = await db.query(sql, [patient_id]);
-    return res;
+    const result = await db.query("SELECT * FROM `vaccin_info` WHERE patient_id = ?", { type: QueryTypes.SELECT, replacements: [patient_id] })
+    return result;
+}
+/**
+ * Get the patient by the secret scanned from the QR code
+ * @param {*} secret The secret to be used to get the patient's information
+ * @returns The patient
+ */
+async function getPatientBySecret(secret)
+{
+    const result = await db.query("SELECT * FROM `patients` WHERE secret = ?", { type: QueryTypes.SELECT, replacements: [secret] })
+    return result;
 }
 
 /**
@@ -46,9 +44,8 @@ async function getVaccinByPatient(patient_id)
  */
 async function getAllPatients()
 {
-    let sql = "SELECT * FROM `patients`";
-    let res = await db.query(sql);
-    return res;
+    const result = await db.query("SELECT * FROM `patients`", { type: QueryTypes.SELECT })
+    return result
 }
 
 /**
@@ -58,9 +55,8 @@ async function getAllPatients()
  */
 async function getPatientBySearch(searchTerm)
 {
-    let sql = "CALL searchPatient(?)"
-    let res = await db.query(sql, [searchTerm]);
-    return res;
+    const result = await db.query("SELECT * FROM `patients` WHERE `personnummer`LIKE CONCAT('%', ?, '%') OR `first_name` LIKE CONCAT('%', ?, '%') OR `last_name` LIKE CONCAT('%', ?, '%');", { type: QueryTypes.SELECT ,replacements: [searchTerm, searchTerm, searchTerm] })
+    return result;
 }
 /**
  * @description gets the patient's information
@@ -69,30 +65,26 @@ async function getPatientBySearch(searchTerm)
  */
 async function getPatientByID(patient_id)
 {
-    let sql = "SELECT * FROM `patients` WHERE id = ?";
-    let res = await db.query(sql, [patient_id]);
-    return res;
+    const result = await db.query("SELECT * FROM `patients` WHERE id = ?", { type: QueryTypes.SELECT, replacements: [patient_id] })
+    return result;
 }
 
 async function getAllvaccines()
 {
-    let sql = "SELECT * FROM `vaccins`";
-    let res = await db.query(sql);
-    return res;
+    const result = await db.query("SELECT * FROM `vaccins", { type: QueryTypes.SELECT })
+    return result;
 }
 
 async function getBookingForStaff(staff_id)
 {
-    let sql = "SELECT * FROM `patients_bookings` WHERE staff_id = ?";
-    let res = await db.query(sql, [staff_id]);
-    return res;
+    const result = await db.query("SELECT * FROM `patients_bookings` WHERE staff_id = ?", { type: QueryTypes.SELECT, replacements: [staff_id] })
+    return result;
 }
 
 async function getBookingById(booking_id)
 {
-    let sql = "SELECT * FROM `patients_bookings` WHERE id = ?";
-    let res = await db.query(sql, [booking_id]);
-    return res;
+    const result = await db.query("SELECT * FROM `patients_bookings` WHERE id = ?", { type: QueryTypes.SELECT, replacements: [booking_id] })
+    return result;
 }
 
 module.exports = {
@@ -102,5 +94,6 @@ module.exports = {
     getPatientByID,
     getAllvaccines,
     getBookingForStaff,
-    getBookingById
+    getBookingById,
+    getPatientBySecret
 }
